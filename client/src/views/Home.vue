@@ -54,7 +54,21 @@
                 </el-table-column>
               </el-table>
             </el-col>
-            <el-col :span="8">这部分还没想好放啥 -_-</el-col>
+            <el-col :span="8">
+              <el-card class="box-card bg-danger" shadow="hover">
+                <div class="d-flex">
+                  <i
+                    class="indexClass el-icon-user-solid"
+                    style="width: 40px;height: 40px;line-height: 40px;"
+                  ></i>
+                  <div style="font-size:20px;color:#ffffff;font-weight:bolid">
+                    <h4 class="bottom">{{this.$store.state.onLineuser.length}}</h4>
+                    <small class="text-muted">在线人数</small>
+                  </div>
+                </div>
+              </el-card>
+              <!-- 在线人数{{this.$store.state.onLineuser}} -->
+            </el-col>
           </el-row>
         </el-tab-pane>
         <el-tab-pane
@@ -85,7 +99,7 @@ import reqsubmitFlow from "../components/Form/reqsubmitFlow";
 
 export default {
   components: {
-    reqsubmitFlow,
+    reqsubmitFlow
   },
   data() {
     return {
@@ -162,31 +176,48 @@ export default {
       this.editableTabsValue = newTabName;
     },
     getInfoFlow() {
-      this.$axios.get(`/api/home/homeflow/${this.$store.state.user.id}`).then(data => {
-        //console.log(data.data);
-        let test = data.data.filter(v=>{
-          return v.stepname!="完成"
-        })
-        //console.log(test)
-        this.tableData = test.map(v => {
-          return {
-            date: this.$moment(v.createTime).format("YYYY-MM-DD HH:mm:ss"),
-            name: v.sendername,
-            flowname: v.flowname,
-            instanceid: v.instanceid,
-            flowstatue: v.flowstate,
-            componentIndex: v.flowcomponent,
-            stepname:v.stepname
-          };
+      this.$axios
+        .get(`/api/home/homeflow/${this.$store.state.user.id}`)
+        .then(data => {
+          //console.log(data.data);
+          let test = data.data.filter(v => {
+            return v.stepname != "完成";
+          });
+          //console.log(test)
+          this.tableData = test.map(v => {
+            return {
+              date: this.$moment(v.createTime).format("YYYY-MM-DD HH:mm:ss"),
+              name: v.sendername,
+              flowname: v.flowname,
+              instanceid: v.instanceid,
+              flowstatue: v.flowstate,
+              componentIndex: v.flowcomponent,
+              stepname: v.stepname
+            };
+          });
         });
-      });
     }
   },
   created() {
     // console.log(111);
-    
+
     this.getInfoFlow();
   }
+  // mounted(){
+  //   this.$socket.emit('connect', 1);
+  // },
+  // sockets:{
+  //   connect(data){
+  //     if(data){
+  //       console.log('连接成功',data)
+  //       this.$socket.emit("users")
+  //     }
+  //   },
+  //    disconnect(data){
+  //     console.log('socket已断开连接');
+  //     this.$socket.emit("users")
+  //   }
+  // }
 };
 </script>
 

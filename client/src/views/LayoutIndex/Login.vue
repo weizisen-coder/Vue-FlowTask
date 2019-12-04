@@ -1,25 +1,34 @@
 <template>
-    <div class="login">
-        <section class="form_container">
-            <div class="manage_tip">
-                <span class="title">后台管理系统</span>
-            </div>
-            <el-form :model="loginUser" :rules="rules" ref="loginForm" class="loginForm" label-width="60px">
-                <el-form-item label="邮箱" prop="email">
-                    <el-input v-model="loginUser.email" placeholder="请输入邮箱"></el-input>
-                </el-form-item>
-                <el-form-item label="密码" prop="password">
-                    <el-input v-model="loginUser.password" placeholder="请输入密码" type="password"></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary"  @click="submitForm('loginForm')" class="submit_btn">登  录</el-button>
-                </el-form-item>
-                <div class="tiparea">
-                    <p>还没有账号？现在<router-link to='/register'>注册</router-link></p>
-                </div>
-            </el-form>
-        </section>
-    </div>
+  <div class="login">
+    <section class="form_container">
+      <div class="manage_tip">
+        <span class="title">后台管理系统</span>
+      </div>
+      <el-form
+        :model="loginUser"
+        :rules="rules"
+        ref="loginForm"
+        class="loginForm"
+        label-width="60px"
+      >
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="loginUser.email" placeholder="请输入邮箱"></el-input>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="loginUser.password" placeholder="请输入密码" type="password"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="submitForm('loginForm')" class="submit_btn">登 录</el-button>
+        </el-form-item>
+        <div class="tiparea">
+          <p>
+            还没有账号？现在
+            <router-link to="/register">注册</router-link>
+          </p>
+        </div>
+      </el-form>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -29,6 +38,7 @@ export default {
   name: "login",
   data() {
     return {
+      logoutData:"",
       loginUser: {
         email: "",
         password: ""
@@ -54,7 +64,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.$axios.post("/api/users/login", this.loginUser).then(res => {
-            console.log(res.data)
+            //console.log(res.data)
             // 登录成功
             const { token } = res.data;
             localStorage.setItem("eleToken", token);
@@ -65,7 +75,7 @@ export default {
             // // 存储数据
             this.$store.dispatch("setIsAutnenticated", !this.isEmpty(decode));
             this.$store.dispatch("setUser", decode);
-
+            
             // 页面跳转
             this.$router.push("/index");
           });
@@ -83,7 +93,24 @@ export default {
         (typeof value === "string" && value.trim().length === 0)
       );
     }
+  },
+  mounted(){
+    console.log('mounted生命周期触发！！')
+    // console.log(this.$store.state.onLineuser);
+    // console.log(this.$route.query.id)
+    if(this.$route.query.id!="undefined"){
+      this.$socket.emit("logout")
+    }
+    
+  },
+  sockets: {
+    users(data) {
+      // console.log(data);
+      
+      this.$store.state.onLineuser = data;
+    }
   }
+
 };
 </script>
 
@@ -92,7 +119,7 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-    background: url(../../assets/bg.jpg) no-repeat center;
+  background: url(../../assets/bg.jpg) no-repeat center;
   background-size: 100% 100%;
 }
 .form_container {

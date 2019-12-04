@@ -48,6 +48,12 @@ export default {
           name: "信息管理",
           path: "info",
           children: [{ path: "infoshow", name: "个人信息" }]
+        },
+        {
+          icon: "fa-asterisk",
+          name: "测试socket",
+          path: "test",
+          children: [{ path: "test", name: "测试socket" }]
         }
       ]
     };

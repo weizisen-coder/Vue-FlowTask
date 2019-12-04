@@ -28,8 +28,12 @@
         </el-form-item>
         <el-form-item>
           <el-button type="info" @click="clear()">退回</el-button>
-          <el-button type="success" @click="sendNext(0)" v-if="(val.flowstatue+3)!=flowStep.length">发送</el-button>
-          <el-button type="success" v-else  @click="sendNext(1)">完成</el-button>
+          <el-button
+            type="success"
+            @click="sendNext(0)"
+            v-if="(val.flowstatue+3)!=flowStep.length"
+          >发送</el-button>
+          <el-button type="success" v-else @click="sendNext(1)">完成</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -73,10 +77,14 @@
       </el-form>
     </div>
     <!-- 流程图 -->
-    <el-dialog title="流程图" :visible.sync="dialogVisible" >
-      <el-steps :active="val.flowstatue+1" align-center finish-status="success" style="margin-top:20px">
+    <el-dialog title="流程图" :visible.sync="dialogVisible">
+      <el-steps
+        :active="val.flowstatue+1"
+        align-center
+        finish-status="success"
+        style="margin-top:20px"
+      >
         <el-step :title="item.name" v-for="(item,index) in flowStep" :key="index"></el-step>
-        
       </el-steps>
     </el-dialog>
   </div>
@@ -157,11 +165,7 @@ export default {
         region: ""
       },
       flowStepNow: "",
-      flowStep: [
-        { name: "首次发起" },
-        { name: "需求审核" },
-        { name: "完成" }
-      ]
+      flowStep: [{ name: "首次发起" }, { name: "需求审核" }, { name: "完成" }]
     };
   },
   methods: {
@@ -184,32 +188,39 @@ export default {
       window.open(href, "_blank");
     },
     sendNext(num) {
-      // console.log(num)
-      // console.log( this.flowStep[this.val.flowstatue+1].name);          
-      let formdata = {
-        flowname: this.val.flowname,
-        flowstate: this.val.flowstatue + 1,
-        instanceid: this.val.instanceid,
-        sendername: this.$store.state.user.name,
-        recievename: "黄子韬",
-        receivedid: this.$store.state.user.id,
-        flowcomponent: this.val.componentIndex,
-        flowstep: this.formInline.region,
-        flowremark: this.formInline.user,
-        stepname:this.flowStep[this.val.flowstatue+1+num].name,
-        iscomplete:num
-      };
-      this.$axios.post("/api/home/sendnext", formdata).then(res => {
-        console.log(res);
-        this.$emit("close", this.arryindex);
-      });
+      if (this.formInline.region != "" && this.formInline.user != "") {
+        // console.log(num)
+        // console.log( this.flowStep[this.val.flowstatue+1].name);
+        let formdata = {
+          flowname: this.val.flowname,
+          flowstate: this.val.flowstatue + 1,
+          instanceid: this.val.instanceid,
+          sendername: this.$store.state.user.name,
+          recievename: "黄子韬",
+          receivedid: this.$store.state.user.id,
+          flowcomponent: this.val.componentIndex,
+          flowstep: this.formInline.region,
+          flowremark: this.formInline.user,
+          stepname: this.flowStep[this.val.flowstatue + 1 + num].name,
+          iscomplete: num
+        };
+        this.$axios.post("/api/home/sendnext", formdata).then(res => {
+          console.log(res);
+          this.$emit("close", this.arryindex);
+        });
+      } else {
+        this.$message({
+          message: "请填写完全处理意见",
+          type: "warning"
+        });
+      }
     }
   },
   created() {
     //console.log(this.val);
     //console.log(this.val.flowstatue);
     // let flowStepIndex = this.val.flowstatue;
-    this.flowStepNow = this.flowStep[this.val.flowstatue+1].name;
+    this.flowStepNow = this.flowStep[this.val.flowstatue + 1].name;
     //console.log(this.flowStepNow);
 
     this.$axios

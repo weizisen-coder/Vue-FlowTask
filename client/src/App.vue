@@ -8,11 +8,17 @@
 import jwt_decode from "jwt-decode";
 export default {
   name: "app",
+ 
   created() {
     if (localStorage.eleToken) {
       const decode = jwt_decode(localStorage.eleToken);
       this.$store.dispatch("setIsAutnenticated", !this.isEmpty(decode));
       this.$store.dispatch("setUser", decode);
+      //console.log(decode.name)
+      // this.$socket.emit("conect", decode);
+      // this.sockets.subscribe("onlineUsers", data => {
+      // console.log(data);
+      // });
     }
   },
   methods: {
@@ -25,6 +31,12 @@ export default {
       );
     }
   }
+  // beforeDestroy(){
+  //   this.$socket.emit("disconnect", "1111");
+  // },
+  // destroyed(){
+  //   this.$socket.emit("disconnect", "1111");
+  // }
 };
 </script>
 

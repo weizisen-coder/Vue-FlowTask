@@ -14,9 +14,28 @@ import LeftMenu from "../../components/Layout/LeftMenu";
 
 export default {
   name: "index",
+  data(){
+    return{
+      userNmber: 0 //在线人数
+    }
+  },
   components: {
     HeadNav,
     LeftMenu
+  },
+  mounted() {
+    // console.log("我是index.vue的生命周期");
+    // this.$socket.emit("connect", 1);
+    this.$socket.emit("users",this.$store.state.user.name)
+  },
+  sockets: {
+    connect() {     
+        console.log('连接成功')     
+    },
+    users(data) {
+      // console.log(data);     
+      this.$store.state.onLineuser = data;
+    }
   }
 };
 </script>
