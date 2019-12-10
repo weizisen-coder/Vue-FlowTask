@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="6" class="logo-container">
         <img src="../../assets/logo.png" class="logo" alt />
-        <span class="title">数字所管理系统</span>
+        <span class="title">迷你工作流</span>
       </el-col>
       <el-col :span="6" class="user">
         <div class="userinfo">

@@ -8,6 +8,7 @@ import Notfound from '../views/LayoutIndex/404.vue'
 import Home from '../views/Home'
 import InfoShow from '../views/InfoShow'
 import Requestsubmit from '../views/menu/Requestsubmit'
+import Development from '../views/menu/Development'
 import Test from '../views/testsocket'
 
 
@@ -26,6 +27,7 @@ const routes = [
       { path: '/home', name: 'home', component: Home },
       { path: '/infoshow', name: 'infoshow', component: InfoShow },
       { path: '/requestsubmit', name: 'requestsubmit', component: Requestsubmit },
+      { path: '/development', name: 'development', component: Development },
       { path: '/test', name: 'test', component: Test },
 
 
@@ -62,22 +64,22 @@ router.beforeEach((to, from, next) => {
   } else {
     // console.log(localStorage.eleToken)
     // console.log(isLogin)
-    if (isLogin) {     
-      next();
-      Vue.use(
-        new VueSocketio({
-          debug: false,
+    // if (isLogin) {     
+    //   next();
+    //   Vue.use(
+    //     new VueSocketio({
+    //       debug: false,
 
-          connection: "http://10.1.6.14:3001/"
-        })
-      );
+    //       connection: "http://10.1.6.14:3001/"
+    //     })
+    //   );
   
 
-    } else {
-      next('/login');
+    // } else {
+    //   next('/login');
      
-    }
-    // isLogin?next():next('/login')
+    // }
+    isLogin?next():next('/login')
 
   }
 })

@@ -41,7 +41,10 @@ export default {
           icon: "fa-money",
           name: "项目开发管理",
           path: "fund",
-          children: [{ path: "requestsubmit", name: "需求提交" }]
+          children: [
+            { path: "requestsubmit", name: "需求提交" },
+            { path: "development", name: "开发说明" }
+          ]
         },
         {
           icon: "fa-asterisk",

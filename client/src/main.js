@@ -6,25 +6,25 @@ import 'element-ui/lib/theme-chalk/index.css';
 import router from './router'
 import store from './store'
 import moment from 'moment'
-// import VueSocketio from 'vue-socket.io';
+import VueSocketio from 'vue-socket.io';
 // import socketio from 'socket.io-client';
-// Vue.use(new VueSocketio({
+Vue.use(new VueSocketio({
 
-//         debug: false,
+        debug: false,
   
-//         connection: 'http://10.1.6.14:3001/'
+        connection: 'http://10.1.6.14:3001/'
   
-//   //       vuex: {       // 不需要用到vuex这个可以不加
+  //       vuex: {       // 不需要用到vuex这个可以不加
   
-//   //             store,
+  //             store,
   
-//   //             actionPrefix: 'SOCKET_',
+  //             actionPrefix: 'SOCKET_',
   
-//   //             mutationPrefix: 'SOCKET_'
+  //             mutationPrefix: 'SOCKET_'
   
-//   //       }
+  //       }
   
-//   }))
+  }))
   
 
 

@@ -97,8 +97,9 @@ export default {
   mounted(){
     console.log('mounted生命周期触发！！')
     // console.log(this.$store.state.onLineuser);
-    // console.log(this.$route.query.id)
-    if(this.$route.query.id!="undefined"){
+     //console.log(this.$route.query.id)
+    //  console.log(typeof this.$route.query.id)
+    if(this.$route.query.id!=undefined){
       this.$socket.emit("logout")
     }
     

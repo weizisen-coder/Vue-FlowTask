@@ -10,6 +10,7 @@ const users = require('./routers/api/user');
 const profiles = require('./routers/api/profiles');
 const reqsubmit = require('./routers/api/reqsubmit');
 const homeflow = require('./routers/api/Homeflow/homeflow');
+const develop = require('./routers/api/develop');
 const test = require('./routers/api/test');
 
 //DB config
@@ -50,6 +51,7 @@ app.use("/api/users", users);
 app.use("/api/profiles", profiles);
 app.use("/api/reqsubmit", reqsubmit);
 app.use("/api/home", homeflow);
+app.use("/api/develop", develop);
 // app.use("/api/test", test);
 let sum = [];
 io.on('connection', (socket) => {
