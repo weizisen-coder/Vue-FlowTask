@@ -20,7 +20,7 @@
     "formidable": "^1.2.1",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mongoose": "^5.7.9",
     "nodemon": "^1.19.4",
     "passport": "^0.4.0",
