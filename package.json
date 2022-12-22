@@ -19,7 +19,7 @@
     "express": "^4.17.1",
     "formidable": "^1.2.1",
     "gravatar": "^1.8.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "moment": "^2.24.0",
     "mongoose": "^5.7.9",
     "nodemon": "^1.19.4",
